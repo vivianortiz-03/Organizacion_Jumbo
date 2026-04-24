@@ -1,0 +1,898 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Proyecto Capítulo 2 - Jumbo</title>
+  <style>
+    :root{
+      --verde:#087337;
+      --verde-oscuro:#064e3b;
+      --verde-suave:#dcfce7;
+      --verde-claro:#ecfdf5;
+      --amarillo:#facc15;
+      --naranjo:#f97316;
+      --azul:#2563eb;
+      --rojo:#dc2626;
+      --texto:#111827;
+      --gris:#6b7280;
+      --borde:#e5e7eb;
+      --fondo:#f3f4f6;
+      --card:#ffffff;
+    }
+
+    *{box-sizing:border-box}
+
+    body{
+      margin:0;
+      font-family: Arial, Helvetica, sans-serif;
+      background:var(--fondo);
+      color:var(--texto);
+      line-height:1.65;
+    }
+
+    header{
+      background:
+        linear-gradient(rgba(6,78,59,.88), rgba(8,115,55,.86)),
+        url("https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=1400&q=80") center/cover;
+      color:white;
+      padding:60px 20px;
+    }
+
+    .container{
+      max-width:1150px;
+      margin:0 auto;
+    }
+
+    .hero{
+      display:grid;
+      grid-template-columns:1.3fr .7fr;
+      gap:28px;
+      align-items:center;
+    }
+
+    .badge{
+      display:inline-block;
+      background:rgba(255,255,255,.16);
+      border:1px solid rgba(255,255,255,.25);
+      padding:8px 14px;
+      border-radius:999px;
+      font-size:14px;
+      margin-bottom:14px;
+    }
+
+    h1{
+      margin:0 0 14px;
+      font-size:clamp(34px,4.5vw,56px);
+      line-height:1.05;
+    }
+
+    .subtitle{
+      font-size:18px;
+      max-width:780px;
+      opacity:.96;
+    }
+
+    .hero-card{
+      background:rgba(255,255,255,.14);
+      border:1px solid rgba(255,255,255,.22);
+      border-radius:22px;
+      padding:24px;
+      backdrop-filter:blur(4px);
+    }
+
+    .hero-card h3{
+      margin-top:0;
+      color:#fff;
+    }
+
+    nav{
+      background:#fff;
+      border-bottom:1px solid var(--borde);
+      position:sticky;
+      top:0;
+      z-index:10;
+    }
+
+    nav .container{
+      display:flex;
+      gap:12px;
+      overflow-x:auto;
+      padding:12px 16px;
+    }
+
+    nav a{
+      white-space:nowrap;
+      text-decoration:none;
+      color:var(--verde-oscuro);
+      font-weight:bold;
+      background:var(--verde-suave);
+      padding:8px 12px;
+      border-radius:999px;
+      font-size:14px;
+    }
+
+    main{
+      padding:28px 16px 70px;
+    }
+
+    section{
+      scroll-margin-top:80px;
+    }
+
+    .card{
+      background:var(--card);
+      border:1px solid var(--borde);
+      border-radius:20px;
+      padding:26px;
+      box-shadow:0 8px 26px rgba(0,0,0,.06);
+      margin:22px 0;
+    }
+
+    h2{
+      color:var(--verde);
+      margin-top:0;
+      font-size:30px;
+      border-bottom:3px solid var(--verde-suave);
+      padding-bottom:8px;
+    }
+
+    h3{
+      color:var(--verde-oscuro);
+      margin-bottom:8px;
+    }
+
+    .grid-2,.grid-3,.grid-4{
+      display:grid;
+      gap:18px;
+    }
+
+    .grid-2{grid-template-columns:repeat(2,minmax(0,1fr))}
+    .grid-3{grid-template-columns:repeat(3,minmax(0,1fr))}
+    .grid-4{grid-template-columns:repeat(4,minmax(0,1fr))}
+
+    .mini{
+      background:#f9fafb;
+      border:1px solid var(--borde);
+      border-radius:16px;
+      padding:18px;
+    }
+
+    .mini strong{
+      color:var(--verde-oscuro);
+    }
+
+    .tag{
+      display:inline-block;
+      padding:5px 10px;
+      border-radius:999px;
+      font-size:12px;
+      font-weight:bold;
+      margin-bottom:10px;
+      background:var(--verde-suave);
+      color:var(--verde-oscuro);
+    }
+
+    .tag.yellow{background:#fef3c7;color:#92400e}
+    .tag.blue{background:#dbeafe;color:#1e3a8a}
+    .tag.red{background:#fee2e2;color:#991b1b}
+    .tag.gray{background:#e5e7eb;color:#374151}
+
+    ul{
+      padding-left:20px;
+      margin-top:8px;
+    }
+
+    .highlight{
+      background:var(--verde-claro);
+      border-left:6px solid var(--verde);
+      padding:18px;
+      border-radius:14px;
+      margin:16px 0;
+    }
+
+    .example{
+      background:#fff7d6;
+      border-left:6px solid var(--amarillo);
+      padding:18px;
+      border-radius:14px;
+      margin:16px 0;
+    }
+
+    .warning{
+      background:#fff1f2;
+      border-left:6px solid var(--rojo);
+      padding:18px;
+      border-radius:14px;
+      margin:16px 0;
+    }
+
+    table{
+      width:100%;
+      border-collapse:collapse;
+      margin-top:14px;
+      font-size:15px;
+    }
+
+    th,td{
+      border:1px solid var(--borde);
+      padding:12px;
+      text-align:left;
+      vertical-align:top;
+    }
+
+    th{
+      background:#f3f4f6;
+      color:#111827;
+    }
+
+    .process{
+      display:grid;
+      grid-template-columns:repeat(5,1fr);
+      gap:12px;
+      margin-top:18px;
+    }
+
+    .step{
+      background:#f9fafb;
+      border:1px solid var(--borde);
+      border-radius:16px;
+      padding:16px;
+      text-align:center;
+      position:relative;
+    }
+
+    .step .num{
+      width:34px;
+      height:34px;
+      border-radius:50%;
+      background:var(--verde);
+      color:#fff;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      margin:0 auto 8px;
+      font-weight:bold;
+    }
+
+    .controls{
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:18px;
+      margin:20px 0;
+    }
+
+    .control{
+      background:#f9fafb;
+      border:1px solid var(--borde);
+      border-radius:16px;
+      padding:16px;
+    }
+
+    label{
+      display:block;
+      font-weight:bold;
+      margin-bottom:10px;
+    }
+
+    input[type=range]{
+      width:100%;
+    }
+
+    .value{
+      color:var(--verde);
+      font-weight:bold;
+    }
+
+    canvas{
+      width:100%;
+      max-width:100%;
+      background:white;
+      border:1px solid var(--borde);
+      border-radius:16px;
+      margin-top:12px;
+    }
+
+    .result{
+      background:#f0fdf4;
+      border:1px solid #bbf7d0;
+      border-radius:16px;
+      padding:18px;
+      margin-top:12px;
+    }
+
+    .pill-row{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      margin-top:12px;
+    }
+
+    .pill{
+      background:#f3f4f6;
+      border:1px solid var(--borde);
+      padding:8px 12px;
+      border-radius:999px;
+      font-weight:bold;
+      color:#374151;
+    }
+
+    footer{
+      text-align:center;
+      color:var(--gris);
+      font-size:14px;
+      margin-top:32px;
+    }
+
+    @media(max-width:980px){
+      .hero,.grid-2,.grid-3,.grid-4,.controls,.process{
+        grid-template-columns:1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <div class="container hero">
+      <div>
+        <span class="badge">Proyecto web · Capítulo 2 · Organización Industrial</span>
+        <h1>Jumbo: naturaleza, ámbito e integración vertical de la empresa</h1>
+        <p class="subtitle">
+          Análisis aplicado del Capítulo 2 a Jumbo, empresa del retail supermercadista. 
+          La página explica la empresa como sustituto del mercado, evalúa su integración vertical,
+          sus costos de transacción, sus costos de coordinación y sus mecanismos de gobernanza.
+        </p>
+      </div>
+      <div class="hero-card">
+        <h3>Requisitos del proyecto</h3>
+        <p><strong>Dimensión teórica:</strong> comprensión rigurosa del Capítulo 2.</p>
+        <p><strong>Aplicación práctica:</strong> análisis de una industria real.</p>
+        <p><strong>Interactividad:</strong> visualización del punto óptimo de integración.</p>
+      </div>
+    </div>
+  </header>
+
+  <nav>
+    <div class="container">
+      <a href="#introduccion">Introducción</a>
+      <a href="#teoria">Teoría</a>
+      <a href="#jumbo">Caso Jumbo</a>
+      <a href="#cadena">Cadena de valor</a>
+      <a href="#gobernanza">Gobernanza</a>
+      <a href="#interactividad">Interactividad</a>
+      <a href="#conclusion">Conclusión</a>
+    </div>
+  </nav>
+
+  <main class="container">
+    <section id="introduccion" class="card">
+      <h2>1. Introducción</h2>
+      <p>
+        El Capítulo 2, <strong>Naturaleza y ámbito de la empresa</strong>, plantea que la empresa es una institución clave
+        para comprender cómo se organizan las actividades económicas. En lugar de ver a la empresa solo como una unidad
+        que transforma insumos en productos, el capítulo la analiza como una organización que reemplaza ciertas
+        transacciones de mercado por coordinación interna.
+      </p>
+
+      <div class="highlight">
+        <strong>Idea principal:</strong> la empresa existe porque usar el mercado tiene costos. Cuando negociar, contratar,
+        supervisar o enfrentar incertidumbre resulta costoso, puede ser más eficiente organizar esas actividades dentro
+        de una empresa.
+      </div>
+
+      <p>
+        Para aplicar esta teoría, se estudia el caso de <strong>Jumbo</strong>, una empresa del sector supermercadista.
+        Jumbo debe coordinar compras, logística, almacenamiento, reposición, ventas presenciales, comercio electrónico,
+        marcas propias y relaciones con proveedores. Por eso, es un buen ejemplo para analizar la relación entre mercado,
+        integración vertical y gobernanza.
+      </p>
+    </section>
+
+    <section id="teoria" class="card">
+      <h2>2. Dimensión teórica: empresa como sustituto del mercado</h2>
+
+      <div class="grid-3">
+        <div class="mini">
+          <span class="tag">Naturaleza de la empresa</span>
+          <h3>¿Qué es una empresa?</h3>
+          <p>
+            Es una institución que coordina recursos mediante una estructura interna de mando. En vez de realizar
+            cada actividad como una transacción independiente de mercado, la empresa organiza procesos bajo una dirección común.
+          </p>
+        </div>
+
+        <div class="mini">
+          <span class="tag yellow">Ámbito de la empresa</span>
+          <h3>¿Hasta dónde debe crecer?</h3>
+          <p>
+            El ámbito depende de qué actividades conviene integrar y cuáles conviene contratar en el mercado.
+            La empresa se expande hasta que los costos de coordinación interna superan los beneficios de integrarse.
+          </p>
+        </div>
+
+        <div class="mini">
+          <span class="tag blue">Objetivo de la empresa</span>
+          <h3>¿Qué busca lograr?</h3>
+          <p>
+            La teoría suele asumir que la empresa maximiza beneficios. Sin embargo, cuando los dueños no administran
+            directamente, pueden surgir problemas de agencia entre propietarios y gerentes.
+          </p>
+        </div>
+      </div>
+
+      <h3>2.1 Costos de transacción</h3>
+      <p>
+        Los costos de transacción son los costos de usar el mercado. No se relacionan solo con el precio del producto,
+        sino con todo lo necesario para que una transacción ocurra y se cumpla adecuadamente.
+      </p>
+
+      <div class="grid-3">
+        <div class="mini">
+          <h3>Negociación</h3>
+          <p>Buscar proveedores, comparar precios, negociar condiciones, redactar contratos y definir responsabilidades.</p>
+        </div>
+        <div class="mini">
+          <h3>Supervisión</h3>
+          <p>Verificar que el proveedor cumpla con calidad, plazos, cantidad, higiene, trazabilidad y continuidad del abastecimiento.</p>
+        </div>
+        <div class="mini">
+          <h3>Oportunismo</h3>
+          <p>Riesgo de que una parte se aproveche de la dependencia de la otra, especialmente cuando existen inversiones específicas.</p>
+        </div>
+      </div>
+
+      <h3>2.2 Costos de coordinación</h3>
+      <p>
+        Integrar actividades no es gratis. Mientras más procesos controla una empresa, más compleja se vuelve la administración.
+        Aparecen costos de coordinación, burocracia, monitoreo interno, problemas de comunicación y dificultades para controlar
+        el desempeño de muchas áreas al mismo tiempo.
+      </p>
+
+      <div class="example">
+        <strong>Equilibrio central del capítulo:</strong> integrar más actividades reduce costos de transacción, pero aumenta
+        costos de coordinación. El punto óptimo es aquel donde la suma de ambos costos es mínima.
+      </div>
+    </section>
+
+    <section id="jumbo" class="card">
+      <h2>3. Aplicación práctica: Jumbo</h2>
+
+      <p>
+        Jumbo forma parte de la industria del retail supermercadista. Su negocio consiste en ofrecer productos de consumo masivo,
+        alimentos, productos frescos, artículos de hogar y otros bienes en tiendas físicas y canales digitales. Para funcionar,
+        no basta con “comprar y vender”; la empresa debe coordinar una cadena compleja de abastecimiento.
+      </p>
+
+      <div class="grid-4">
+        <div class="mini">
+          <span class="tag">Compras</span>
+          <p>Negociación con proveedores nacionales e internacionales.</p>
+        </div>
+        <div class="mini">
+          <span class="tag">Logística</span>
+          <p>Distribución de productos hacia locales y canales online.</p>
+        </div>
+        <div class="mini">
+          <span class="tag">Inventario</span>
+          <p>Control de stock, reposición y prevención de quiebres.</p>
+        </div>
+        <div class="mini">
+          <span class="tag">Venta</span>
+          <p>Atención en sala, cajas, e-commerce y retiro o despacho.</p>
+        </div>
+      </div>
+
+      <h3>3.1 ¿Por qué Jumbo no usa solo el mercado?</h3>
+      <p>
+        Si Jumbo dependiera únicamente de transacciones externas sin coordinación interna, tendría mayores riesgos:
+        atrasos de proveedores, diferencias de calidad entre locales, problemas de stock, precios inconsistentes y pérdida
+        de control sobre la experiencia del cliente. Por eso, aunque compra muchos productos a terceros, mantiene una estructura
+        interna fuerte para organizar el abastecimiento y la operación.
+      </p>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Concepto del Capítulo 2</th>
+            <th>Aplicación a Jumbo</th>
+            <th>Importancia estratégica</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Empresa como sustituto del mercado</td>
+            <td>Jumbo coordina compras, logística, inventarios, promociones, reposición y venta al cliente.</td>
+            <td>Permite uniformidad, control de calidad y eficiencia operacional.</td>
+          </tr>
+          <tr>
+            <td>Costos de transacción</td>
+            <td>Negociar con cientos de proveedores implica costos de búsqueda, negociación, supervisión y cumplimiento.</td>
+            <td>La empresa reduce estos costos mediante contratos, sistemas y relaciones de largo plazo.</td>
+          </tr>
+          <tr>
+            <td>Integración vertical</td>
+            <td>Jumbo no produce todo, pero sí integra actividades estratégicas como logística, inventario, marcas propias y gestión comercial.</td>
+            <td>Permite controlar partes clave de la cadena sin asumir toda la producción.</td>
+          </tr>
+          <tr>
+            <td>Costos de coordinación</td>
+            <td>Administrar bodegas, locales, sistemas, trabajadores y canales online aumenta la complejidad.</td>
+            <td>La empresa debe evitar que la integración genere burocracia excesiva.</td>
+          </tr>
+          <tr>
+            <td>Problema de agencia</td>
+            <td>Gerentes, jefaturas y trabajadores pueden no tener siempre los mismos incentivos que los dueños.</td>
+            <td>Se requieren metas, supervisión, incentivos y evaluación de desempeño.</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="cadena" class="card">
+      <h2>4. Cadena de valor e integración vertical de Jumbo</h2>
+
+      <p>
+        La integración vertical se refiere al grado en que una empresa controla distintas etapas de su proceso productivo
+        o comercial. En Jumbo, la integración no es total, porque la empresa no fabrica todos los productos que vende.
+        Sin embargo, sí controla etapas fundamentales de la cadena.
+      </p>
+
+      <div class="process">
+        <div class="step">
+          <div class="num">1</div>
+          <strong>Proveedores</strong>
+          <p>Producción de alimentos, abarrotes, productos frescos y artículos de consumo.</p>
+        </div>
+        <div class="step">
+          <div class="num">2</div>
+          <strong>Compras</strong>
+          <p>Negociación centralizada de precios, condiciones, volumen y promociones.</p>
+        </div>
+        <div class="step">
+          <div class="num">3</div>
+          <strong>Logística</strong>
+          <p>Recepción, almacenamiento, distribución y control de inventarios.</p>
+        </div>
+        <div class="step">
+          <div class="num">4</div>
+          <strong>Locales y online</strong>
+          <p>Reposición, exhibición, venta presencial y venta digital.</p>
+        </div>
+        <div class="step">
+          <div class="num">5</div>
+          <strong>Cliente final</strong>
+          <p>Experiencia de compra, fidelización, despacho y postventa.</p>
+        </div>
+      </div>
+
+      <h3>4.1 Actividades más integradas</h3>
+      <div class="grid-2">
+        <div class="mini">
+          <h3>Alta integración</h3>
+          <ul>
+            <li>Gestión de locales.</li>
+            <li>Diseño comercial y promociones.</li>
+            <li>Control de inventarios.</li>
+            <li>Reposición y exhibición de productos.</li>
+            <li>Estándares de calidad y atención.</li>
+            <li>Gestión de marcas propias.</li>
+          </ul>
+        </div>
+        <div class="mini">
+          <h3>Menor integración</h3>
+          <ul>
+            <li>Producción de la mayoría de alimentos y productos.</li>
+            <li>Fabricación de envases.</li>
+            <li>Producción agrícola o industrial de proveedores.</li>
+            <li>Algunos servicios externos especializados.</li>
+            <li>Parte del transporte o distribución según acuerdos.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="highlight">
+        <strong>Diagnóstico:</strong> Jumbo presenta una integración vertical selectiva. Controla las actividades que afectan
+        directamente su propuesta de valor, pero usa proveedores externos cuando estos pueden producir con mayor especialización
+        o menor costo.
+      </div>
+    </section>
+
+    <section id="gobernanza" class="card">
+      <h2>5. Determinantes de gobernanza en Jumbo</h2>
+
+      <p>
+        La gobernanza se refiere a los mecanismos que usa la empresa para coordinar, controlar y alinear incentivos.
+        En Jumbo, la gobernanza es esencial porque la empresa depende de muchos actores internos y externos.
+      </p>
+
+      <div class="grid-2">
+        <div class="mini">
+          <span class="tag">Gobernanza interna</span>
+          <ul>
+            <li>Jerarquías administrativas y comerciales.</li>
+            <li>Sistemas de inventario y reposición.</li>
+            <li>Supervisión de sala, cajas y atención al cliente.</li>
+            <li>Indicadores de ventas, merma y quiebres de stock.</li>
+            <li>Capacitación del personal.</li>
+            <li>Protocolos de higiene y seguridad alimentaria.</li>
+          </ul>
+        </div>
+
+        <div class="mini">
+          <span class="tag yellow">Gobernanza externa</span>
+          <ul>
+            <li>Contratos con proveedores.</li>
+            <li>Condiciones de entrega y abastecimiento.</li>
+            <li>Acuerdos de precios, descuentos y promociones.</li>
+            <li>Evaluación de cumplimiento y calidad.</li>
+            <li>Estándares para productos frescos y perecibles.</li>
+            <li>Relaciones de largo plazo con proveedores estratégicos.</li>
+          </ul>
+        </div>
+      </div>
+
+      <h3>5.1 Riesgos que debe controlar Jumbo</h3>
+      <div class="grid-3">
+        <div class="mini">
+          <span class="tag red">Riesgo 1</span>
+          <h3>Quiebres de stock</h3>
+          <p>Si un proveedor falla, Jumbo puede perder ventas y afectar la satisfacción del cliente.</p>
+        </div>
+        <div class="mini">
+          <span class="tag red">Riesgo 2</span>
+          <h3>Calidad irregular</h3>
+          <p>La mala calidad de un producto puede dañar la reputación del supermercado.</p>
+        </div>
+        <div class="mini">
+          <span class="tag red">Riesgo 3</span>
+          <h3>Oportunismo</h3>
+          <p>Un proveedor estratégico podría intentar cambiar condiciones si Jumbo depende demasiado de él.</p>
+        </div>
+      </div>
+
+      <div class="warning">
+        <strong>Relación con el Capítulo 2:</strong> estos riesgos muestran por qué no basta con usar el mercado.
+        La empresa necesita mecanismos de control para reducir incertidumbre, oportunismo y costos de transacción.
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>6. Análisis FODA breve aplicado a la teoría</h2>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Fortalezas</th>
+            <th>Oportunidades</th>
+            <th>Debilidades</th>
+            <th>Amenazas</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Marca reconocida, escala de compra, variedad de productos y capacidad logística.</td>
+            <td>Crecimiento del comercio electrónico, marcas propias y mejora de sistemas de inventario.</td>
+            <td>Alta complejidad operativa y costos elevados de coordinación.</td>
+            <td>Competencia de otros supermercados, inflación, cambios en hábitos de consumo y fallas de proveedores.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p>
+        Desde la mirada del Capítulo 2, las fortalezas de Jumbo se relacionan con su capacidad de coordinar internamente
+        procesos complejos. Sus debilidades se vinculan con los costos de coordinación que aparecen al operar una red
+        grande de locales, trabajadores, proveedores y canales digitales.
+      </p>
+    </section>
+
+    <section id="interactividad" class="card">
+      <h2>7. Interactividad: punto óptimo de integración</h2>
+
+      <p>
+        El siguiente simulador representa la idea central del capítulo. Al aumentar el grado de integración,
+        los costos de transacción disminuyen porque la empresa depende menos de negociaciones externas.
+        Sin embargo, los costos de coordinación aumentan porque administrar más actividades internamente se vuelve más complejo.
+      </p>
+
+      <div class="controls">
+        <div class="control">
+          <label for="tb">Costo base de transacción: <span class="value" id="tbv">90</span></label>
+          <input id="tb" type="range" min="30" max="150" value="90">
+        </div>
+        <div class="control">
+          <label for="cb">Costo base de coordinación: <span class="value" id="cbv">10</span></label>
+          <input id="cb" type="range" min="0" max="70" value="10">
+        </div>
+        <div class="control">
+          <label for="cs">Pendiente de coordinación: <span class="value" id="csv">1.6</span></label>
+          <input id="cs" type="range" min="0.5" max="4" step="0.1" value="1.6">
+        </div>
+      </div>
+
+      <div class="result" id="resultado"></div>
+      <canvas id="grafico" width="1000" height="430"></canvas>
+
+      <div class="example">
+        <strong>Interpretación aplicada:</strong> si Jumbo depende demasiado del mercado, puede enfrentar problemas de
+        negociación, calidad y abastecimiento. Pero si intenta integrar todo, aumentan sus costos de administración,
+        burocracia y control. Por eso, su estrategia razonable es una integración intermedia y selectiva.
+      </div>
+    </section>
+
+    <section id="conclusion" class="card">
+      <h2>8. Conclusión general</h2>
+
+      <p>
+        El análisis del Capítulo 2 permite comprender que Jumbo no es solo un supermercado que vende productos.
+        Es una organización que coordina una red compleja de proveedores, inventarios, bodegas, locales, trabajadores,
+        sistemas digitales y consumidores. Esta coordinación justifica la existencia de la empresa como sustituto parcial
+        del mercado.
+      </p>
+
+      <p>
+        Jumbo no se integra completamente porque producir todos los bienes que vende sería muy costoso y complejo.
+        Sin embargo, tampoco deja todo al mercado, porque necesita controlar calidad, abastecimiento, precios, experiencia
+        del cliente y reputación. Por eso, su integración vertical es <strong>selectiva</strong>: controla actividades estratégicas
+        y externaliza aquellas donde los proveedores especializados pueden ser más eficientes.
+      </p>
+
+      <div class="highlight">
+        <strong>Conclusión final:</strong> Jumbo alcanza mayor eficiencia cuando equilibra costos de transacción y costos de coordinación.
+        Ese equilibrio representa el punto óptimo de integración explicado en el Capítulo 2.
+      </div>
+
+      <h3>Referencias usadas en el proyecto</h3>
+      <ul>
+        <li>Capítulo 2. <em>Naturaleza y ámbito de la empresa</em>.</li>
+        <li>Coase, R. H. Teoría de la empresa y costos de transacción.</li>
+        <li>Williamson, O. E. Análisis de costos de transacción e integración vertical.</li>
+      </ul>
+    </section>
+
+    <footer>
+      Proyecto web elaborado en HTML, CSS y JavaScript · Caso aplicado: Jumbo.
+    </footer>
+  </main>
+
+  <script>
+    const tb = document.getElementById('tb');
+    const cb = document.getElementById('cb');
+    const cs = document.getElementById('cs');
+    const tbv = document.getElementById('tbv');
+    const cbv = document.getElementById('cbv');
+    const csv = document.getElementById('csv');
+    const resultado = document.getElementById('resultado');
+    const canvas = document.getElementById('grafico');
+    const ctx = canvas.getContext('2d');
+
+    function transaccion(x, t){
+      return Math.max(0, t - 0.9 * x);
+    }
+
+    function coordinacion(x, c, s){
+      return c + s * Math.pow(x, 1.4);
+    }
+
+    function eje(){
+      ctx.strokeStyle = "#374151";
+      ctx.lineWidth = 1.5;
+      ctx.beginPath();
+      ctx.moveTo(70, 30);
+      ctx.lineTo(70, 360);
+      ctx.lineTo(950, 360);
+      ctx.stroke();
+
+      ctx.fillStyle = "#111827";
+      ctx.font = "14px Arial";
+      ctx.fillText("Costo", 24, 28);
+      ctx.fillText("Grado de integración", 785, 395);
+
+      for(let i = 0; i <= 10; i++){
+        const x = 70 + i * 88;
+        ctx.strokeStyle = "#e5e7eb";
+        ctx.beginPath();
+        ctx.moveTo(x, 30);
+        ctx.lineTo(x, 360);
+        ctx.stroke();
+        ctx.fillStyle = "#6b7280";
+        ctx.fillText(String(i * 10), x - 8, 382);
+      }
+
+      for(let i = 0; i <= 6; i++){
+        const y = 360 - i * 50;
+        ctx.strokeStyle = "#e5e7eb";
+        ctx.beginPath();
+        ctx.moveTo(70, y);
+        ctx.lineTo(950, y);
+        ctx.stroke();
+      }
+    }
+
+    function linea(tipo, color, etiqueta, t, c, s, posY){
+      ctx.beginPath();
+      ctx.lineWidth = 3;
+      ctx.strokeStyle = color;
+
+      for(let i = 0; i <= 100; i++){
+        let costo = 0;
+        if(tipo === "T") costo = transaccion(i, t);
+        if(tipo === "C") costo = coordinacion(i, c, s);
+        if(tipo === "TT") costo = transaccion(i, t) + coordinacion(i, c, s);
+
+        const px = 70 + i * 8.8;
+        const py = 360 - costo * 2.3;
+
+        if(i === 0) ctx.moveTo(px, py);
+        else ctx.lineTo(px, py);
+      }
+
+      ctx.stroke();
+
+      ctx.fillStyle = color;
+      ctx.fillRect(735, posY - 8, 18, 8);
+      ctx.fillStyle = "#111827";
+      ctx.font = "14px Arial";
+      ctx.fillText(etiqueta, 760, posY);
+    }
+
+    function optimo(t, c, s){
+      let mejorX = 0;
+      let mejorCosto = Infinity;
+
+      for(let x = 0; x <= 100; x++){
+        const total = transaccion(x, t) + coordinacion(x, c, s);
+        if(total < mejorCosto){
+          mejorCosto = total;
+          mejorX = x;
+        }
+      }
+
+      const px = 70 + mejorX * 8.8;
+      const py = 360 - mejorCosto * 2.3;
+
+      ctx.fillStyle = "#111827";
+      ctx.beginPath();
+      ctx.arc(px, py, 6, 0, Math.PI * 2);
+      ctx.fill();
+
+      ctx.setLineDash([6,6]);
+      ctx.strokeStyle = "#111827";
+      ctx.beginPath();
+      ctx.moveTo(px, py);
+      ctx.lineTo(px, 360);
+      ctx.stroke();
+      ctx.setLineDash([]);
+
+      ctx.font = "bold 14px Arial";
+      ctx.fillText("Óptimo", px + 10, py - 10);
+
+      resultado.innerHTML =
+        "<strong>Resultado:</strong> el nivel óptimo de integración es aproximadamente <strong>" + mejorX + "%</strong>. " +
+        "En ese punto, la suma entre costos de transacción y costos de coordinación es la más baja. " +
+        "Aplicado a Jumbo, significa que la empresa debe controlar actividades estratégicas como logística, inventario, estándares de calidad y relación con clientes, " +
+        "pero no necesariamente producir internamente todos los productos que vende.";
+    }
+
+    function render(){
+      const t = parseFloat(tb.value);
+      const c = parseFloat(cb.value);
+      const s = parseFloat(cs.value);
+
+      tbv.textContent = t;
+      cbv.textContent = c;
+      csv.textContent = s.toFixed(1);
+
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      eje();
+      linea("T", "#dc2626", "Costos de transacción", t, c, s, 55);
+      linea("C", "#2563eb", "Costos de coordinación", t, c, s, 80);
+      linea("TT", "#111827", "Costo total", t, c, s, 105);
+      optimo(t, c, s);
+    }
+
+    [tb, cb, cs].forEach(el => el.addEventListener("input", render));
+    render();
+  </script>
+</body>
+</html>
